@@ -1,4 +1,3 @@
-
 #define GPIOB_BASE_ADDR		0x40020400
 #define GPIOB_MODER			(*(unsigned long *)(GPIOB_BASE_ADDR + 0x00))
 #define GPIOB_OTYPER		(*(unsigned long *)(GPIOB_BASE_ADDR + 0x04))
@@ -18,11 +17,16 @@ int main(void){
 	GPIOB_ODR |= (0x01 << 3*1);
 	while(TRUE){
 		GPIOB_ODR &= ~(0x01 << 3*1);
-		unsigned char i = 0;
-		for(i = 0; i < 10000; i++){
-			__asm("nop");
+
+		for(unsigned int i = 0; i < 100000; i++){
+			 __asm("nop");
 		}
-       GPIOB_ODR |= (0x01 << 3*1);
+		GPIOB_ODR |= (0x01 << 3*1);
+
+		for(unsigned int i = 0; i < 100000; i++){
+					 __asm("nop");
+		}
+
 	}
 
 	return 0;
