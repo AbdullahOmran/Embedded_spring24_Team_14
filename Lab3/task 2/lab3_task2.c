@@ -1,4 +1,3 @@
-// Task 2///////////////////////////////////////////////////////////////////////////////////////////////////////
 #define GPIOB_BASE_ADDR		0x40020400
 #define GPIOB_MODER			(*(unsigned long *)(GPIOB_BASE_ADDR + 0x00))
 #define GPIOB_OTYPER		(*(unsigned long *)(GPIOB_BASE_ADDR + 0x04))
@@ -28,7 +27,10 @@ int main(void){
 		// detect falling edge (button press)
 		if(prevBtnState && !btnState){
 			// code for changing color of the LED
-			active_pin %= 8 ;
+			GPIOB_ODR &= ~(0x01 << 5);
+			GPIOB_ODR &= ~(0x01 << 6);
+			GPIOB_ODR &= ~(0x01 << 7);
+			active_pin %= 7 ;
 			if (active_pin & (0x01)){
 				GPIOB_ODR &= ~(0x01 << 5);
 				GPIOB_ODR |= (0x01 << 5);
@@ -49,7 +51,7 @@ int main(void){
 		// add delay for debouncing
 		delay(1000);
 	}
-	
+
 	return 0;
 }
 
@@ -78,4 +80,3 @@ void delay(unsigned int milliseconds){
         __asm("nop");
     }
 }
-
