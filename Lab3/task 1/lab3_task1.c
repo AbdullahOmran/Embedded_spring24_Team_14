@@ -18,8 +18,8 @@ int main(void){
 	GPIOB_ODR |= (0x01 << 3*1);
 	while(TRUE){
 		GPIOB_ODR &= ~(0x01 << 3*1);
-		unsigned char i = 0;
-		for(i = 0; i < 10000; i++){
+		
+		for( unsigned int i = 0; i < 10000; i++){
 			__asm("nop");
 		}
        GPIOB_ODR |= (0x01 << 3*1);
