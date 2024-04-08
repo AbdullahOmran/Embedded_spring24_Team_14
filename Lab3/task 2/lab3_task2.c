@@ -1,3 +1,4 @@
+
 #define GPIOB_BASE_ADDR		0x40020400
 #define GPIOB_MODER			(*(unsigned long *)(GPIOB_BASE_ADDR + 0x00))
 #define GPIOB_OTYPER		(*(unsigned long *)(GPIOB_BASE_ADDR + 0x04))
@@ -18,7 +19,7 @@ int main(void){
 	initialize();
 	unsigned char btnState = 0;
 	unsigned char prevBtnState = 0;
-	unsigned char active_pin = 0;
+	unsigned int active_pin = 0;
 
 	while (TRUE)
 	{
@@ -30,7 +31,7 @@ int main(void){
 			GPIOB_ODR &= ~(0x01 << 5);
 			GPIOB_ODR &= ~(0x01 << 6);
 			GPIOB_ODR &= ~(0x01 << 7);
-			active_pin %= 7 ;
+
 			if (active_pin & (0x01)){
 				GPIOB_ODR &= ~(0x01 << 5);
 				GPIOB_ODR |= (0x01 << 5);
@@ -44,7 +45,9 @@ int main(void){
 				GPIOB_ODR |= (0x01 << 7);
 			}
 
+			active_pin %= 8 ;
 			active_pin++;
+
 		}
 		// update prev state
 		prevBtnState = btnState;
